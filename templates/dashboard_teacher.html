@@ -1,0 +1,52 @@
+{% extends "dashboard_base.html" %}
+
+{% block dashboard_content %}
+<div class="teacher-dashboard">
+    <div class="welcome-section glass-panel">
+        <h2>Welcome, Teacher {{ user.get_full_name }}! 👩‍🏫</h2>
+        <p>Manage your classes, take attendance, and enter marks for your students.</p>
+    </div>
+
+    <div class="teacher-stats">
+        <div class="stat-card glass-panel">
+            <h3>📚 My Subjects</h3>
+            <p class="stat-number">{{ my_subjects.count }}</p>
+        </div>
+        <div class="stat-card glass-panel">
+            <h3>👨‍🎓 Total Students</h3>
+            <p class="stat-number">{{ total_students }}</p>
+        </div>
+    </div>
+
+    <div class="teacher-actions glass-panel">
+        <h3>My Subjects</h3>
+        {% if my_subjects %}
+            <div class="subjects-list">
+                {% for subject in my_subjects %}
+                <div class="subject-item">
+                    <h4>{{ subject.name }}</h4>
+                    <p>Class: {{ subject.class_associated.name }}</p>
+                    <p>Code: {{ subject.code }}</p>
+                    <div class="subject-actions">
+                        <button class="btn btn-small">Take Attendance</button>
+                        <button class="btn btn-small">Enter Marks</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No subjects assigned yet. Contact admin.</p>
+        {% endif %}
+    </div>
+
+    <div class="quick-links glass-panel">
+        <h3>Quick Links</h3>
+        <div class="action-buttons">
+            <button class="btn">View All Students</button>
+            <button class="btn">Attendance Records</button>
+            <button class="btn">Mark Entry</button>
+            <button class="btn">Timetable</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

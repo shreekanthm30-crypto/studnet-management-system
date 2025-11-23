@@ -1,0 +1,48 @@
+{% extends "dashboard_base.html" %}
+
+{% block dashboard_content %}
+<div class="attendance-view-page">
+    <div class="page-header glass-panel">
+        <h2>📊 My Attendance Records</h2>
+        <p>Student: {{ student.user.get_full_name }} | Class: {{ student.class_enrolled.name }}</p>
+    </div>
+
+    <div class="attendance-summary glass-panel">
+        <h3>Attendance Summary</h3>
+        <div class="summary-stats">
+            <div class="summary-stat">
+                <span class="stat-label">Total Classes:</span>
+                <span class="stat-value">{{ attendance.count }}</span>
+            </div>
+            <div class="summary-stat">
+                <span class="stat-label">Present:</span>
+                <span class="stat-value present">{{ attendance|length|default:0 }}</span>
+            </div>
+            <div class="summary-stat">
+                <span class="stat-label">Absent:</span>
+                <span class="stat-value absent">{{ attendance|length|default:0 }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="attendance-records glass-panel">
+        <h3>Detailed Records</h3>
+        {% if attendance %}
+            <div class="records-list">
+                {% for record in attendance %}
+                <div class="record-item {% if record.status %}present{% else %}absent{% endif %}">
+                    <div class="record-subject">{{ record.subject.name }}</div>
+                    <div class="record-date">{{ record.date }}</div>
+                    <div class="record-status">
+                        {% if record.status %}✅ Present{% else %}❌ Absent{% endif %}
+                    </div>
+                    <div class="record-remarks">{{ record.remarks|default:"-" }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-data">No attendance records found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

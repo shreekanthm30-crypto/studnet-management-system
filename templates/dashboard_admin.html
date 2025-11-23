@@ -1,0 +1,50 @@
+{% extends "dashboard_base.html" %}
+
+{% block dashboard_content %}
+<div class="admin-dashboard">
+    <div class="stats-grid">
+        <div class="stat-card glass-panel">
+            <h3>👨‍🎓 Total Students</h3>
+            <p class="stat-number">{{ total_students }}</p>
+        </div>
+        <div class="stat-card glass-panel">
+            <h3>👩‍🏫 Total Teachers</h3>
+            <p class="stat-number">{{ total_teachers }}</p>
+        </div>
+        <div class="stat-card glass-panel">
+            <h3>🏫 Total Classes</h3>
+            <p class="stat-number">{{ total_classes }}</p>
+        </div>
+        <div class="stat-card glass-panel">
+            <h3>📊 System Status</h3>
+            <p class="stat-status">🟢 Online</p>
+        </div>
+    </div>
+
+    <div class="admin-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-buttons">
+            <a href="/admin/core/student/add/" class="btn">Add Student</a>
+            <a href="/admin/core/teacher/add/" class="btn">Add Teacher</a>
+            <a href="/admin/core/class/add/" class="btn">Add Class</a>
+            <a href="/admin/core/subject/add/" class="btn">Add Subject</a>
+            <a href="/admin/" class="btn btn-secondary">Admin Panel</a>
+        </div>
+    </div>
+
+    <div class="recent-announcements glass-panel">
+        <h2>📢 Recent Announcements</h2>
+        {% if recent_announcements %}
+            {% for announcement in recent_announcements %}
+            <div class="announcement-item">
+                <h4>{{ announcement.title }}</h4>
+                <p>{{ announcement.content|truncatewords:20 }}</p>
+                <small>By {{ announcement.created_by.username }} on {{ announcement.created_at|date:"M d, Y" }}</small>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No announcements yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

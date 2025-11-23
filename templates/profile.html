@@ -1,0 +1,52 @@
+{% extends "dashboard_base.html" %}
+
+{% block dashboard_content %}
+<div class="profile-page">
+    <div class="profile-header glass-panel">
+        <h2>👤 My Profile</h2>
+    </div>
+
+    <div class="profile-content">
+        <div class="profile-info glass-panel">
+            <h3>Personal Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Username:</label>
+                    <span>{{ user.username }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Full Name:</label>
+                    <span>{{ user.get_full_name }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Email:</label>
+                    <span>{{ user.email }}</span>
+                </div>
+                <div class="info-item">
+                    <label>Role:</label>
+                    <span class="role-badge">{{ user.profile.role|title }}</span>
+                </div>
+                {% if user.profile.phone %}
+                <div class="info-item">
+                    <label>Phone:</label>
+                    <span>{{ user.profile.phone }}</span>
+                </div>
+                {% endif %}
+                <div class="info-item">
+                    <label>Joined:</label>
+                    <span>{{ user.date_joined|date:"M d, Y" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions glass-panel">
+            <h3>Account Actions</h3>
+            <div class="action-buttons">
+                <button class="btn">Edit Profile</button>
+                <button class="btn">Change Password</button>
+                <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

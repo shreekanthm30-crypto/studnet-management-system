@@ -1,0 +1,65 @@
+{% extends "dashboard_base.html" %}
+
+{% block dashboard_content %}
+<div class="student-dashboard">
+    <div class="welcome-section glass-panel">
+        <h2>Welcome, {{ student.user.get_full_name }}! 👨‍🎓</h2>
+        <p>Student ID: {{ student.student_id }} | Class: {{ student.class_enrolled.name }}</p>
+    </div>
+
+    <div class="student-info-grid">
+        <div class="info-card glass-panel">
+            <h3>📊 My Attendance</h3>
+            {% if attendance %}
+                <div class="attendance-list">
+                    {% for record in attendance %}
+                    <div class="attendance-item {% if record.status %}present{% else %}absent{% endif %}">
+                        <span>{{ record.subject.name }}</span>
+                        <span>{{ record.date }}</span>
+                        <span class="status">{% if record.status %}✅ Present{% else %}❌ Absent{% endif %}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No attendance records yet.</p>
+            {% endif %}
+            <a href="#" class="btn btn-small">View All Attendance</a>
+        </div>
+
+        <div class="info-card glass-panel">
+            <h3>🎯 My Marks</h3>
+            {% if marks %}
+                <div class="marks-list">
+                    {% for mark in marks %}
+                    <div class="mark-item">
+                        <span>{{ mark.subject.name }}</span>
+                        <span class="score">{{ mark.marks_obtained }}/{{ mark.total_marks }}</span>
+                        <span class="percentage">{% widthratio mark.marks_obtained mark.total_marks 100 %}%</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No marks recorded yet.</p>
+            {% endif %}
+            <a href="#" class="btn btn-small">View All Marks</a>
+        </div>
+    </div>
+
+    <div class="timetable-section glass-panel">
+        <h3>📅 My Timetable</h3>
+        {% if timetable %}
+            <div class="timetable">
+                {% for slot in timetable %}
+                <div class="timetable-slot">
+                    <strong>{{ slot.day|title }}</strong>
+                    <span>{{ slot.start_time }} - {{ slot.end_time }}</span>
+                    <span>{{ slot.subject.name }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Timetable not available yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

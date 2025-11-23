@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section glass-panel">
+    <div class="hero-content">
+        <h1>🎓 Student Management System</h1>
+        <p class="hero-subtitle">Welcome to our school portal</p>
+        
+        <div class="hero-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+                <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                <div class="role-buttons">
+                    <div class="role-card">
+                        <h3>👨‍🎓 Student</h3>
+                        <p>View your attendance, marks, and timetable</p>
+                    </div>
+                    <div class="role-card">
+                        <h3>👩‍🏫 Teacher</h3>
+                        <p>Take attendance and enter marks</p>
+                    </div>
+                    <div class="role-card">
+                        <h3>👨‍💼 Admin</h3>
+                        <p>Manage students, teachers, and classes</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
